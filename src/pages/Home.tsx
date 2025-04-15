@@ -1,53 +1,16 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Leaf, Users, Building2 } from 'lucide-react';
 
 const Home = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [imagesLoaded, setImagesLoaded] = useState<boolean[]>([]);
-  const imagesRef = useRef<HTMLImageElement[]>([]);
 
-  // Versions optimisées des images avec des tailles et des qualités différentes
   const heroImages = [
-    {
-      full: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1920",
-      preview: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=10&w=400&blur=10",
-      alt: "Maison moderne écologique"
-    },
-    {
-      full: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=1920",
-      preview: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=10&w=400&blur=10",
-      alt: "Design intérieur minimaliste"
-    },
-    {
-      full: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=1920",
-      preview: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=10&w=400&blur=10",
-      alt: "Villa contemporaine"
-    },
-    {
-      full: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=1920",
-      preview: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=10&w=400&blur=10",
-      alt: "Design intérieur minimaliste"
-    }
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80",
+    "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80"
   ];
-
-  // Préchargement des images
-  useEffect(() => {
-    const imageStatuses = heroImages.map(() => false);
-    setImagesLoaded(imageStatuses);
-
-    heroImages.forEach((image, index) => {
-      const img = new Image();
-      img.src = image.full;
-      img.onload = () => {
-        setImagesLoaded(prev => {
-          const newState = [...prev];
-          newState[index] = true;
-          return newState;
-        });
-      };
-    });
-  }, []);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -62,57 +25,20 @@ const Home = () => {
   const featuredProjects = [
     {
       title: "Éco-Resort Kpalimé",
-      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=800",
-      thumbnail: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=30&w=400",
+      image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=1200",
       description: "Centre de villégiature écologique intégré dans la nature"
     },
     {
       title: "Résidence Durable Lomé",
-      image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=800",
-      thumbnail: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=30&w=400",
+      image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&q=80&w=1200",
       description: "Maison moderne utilisant des matériaux locaux"
     },
     {
       title: "Centre Communautaire Sokodé",
-      image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=800",
-      thumbnail: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=30&w=400",
+      image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=1200",
       description: "Espace communautaire à faible impact environnemental"
     }
   ];
-
-  // Composant d'image progressive
-  const ProgressiveImage = ({ src, lowQualitySrc, alt, className, index }: { 
-    src: string, 
-    lowQualitySrc: string, 
-    alt: string, 
-    className: string,
-    index: number
-  }) => {
-    const [isLoaded, setIsLoaded] = useState(false);
-    
-    return (
-      <div className="relative overflow-hidden">
-        {/* Image floutée de faible qualité */}
-        <img 
-          src={lowQualitySrc} 
-          alt={alt} 
-          className={`${className} ${isLoaded ? 'opacity-0' : 'opacity-100'} absolute inset-0 transition-opacity duration-500`} 
-        />
-        
-        {/* Image haute qualité */}
-        <img 
-          ref={el => {
-            if (el) imagesRef.current[index] = el;
-          }}
-          src={src} 
-          alt={alt}
-          loading="lazy"
-          className={`${className} ${isLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-500`} 
-          onLoad={() => setIsLoaded(true)}
-        />
-      </div>
-    );
-  };
 
   return (
     <div className="pt-16">
@@ -124,22 +50,16 @@ const Home = () => {
       >
         <div className="absolute inset-0 overflow-hidden">
           <AnimatePresence mode="wait">
-            <motion.div
+            <motion.img
               key={currentImageIndex}
-              className="w-full h-full"
+              src={heroImages[currentImageIndex]}
+              alt="Architecture durable"
+              className="w-full h-full object-cover"
               initial={{ opacity: 0, scale: 1.1 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.7 }}
-            >
-              <ProgressiveImage 
-                src={heroImages[currentImageIndex].full} 
-                lowQualitySrc={heroImages[currentImageIndex].preview}
-                alt={heroImages[currentImageIndex].alt}
-                className="w-full h-full object-cover"
-                index={currentImageIndex}
-              />
-            </motion.div>
+            />
           </AnimatePresence>
           <div className="absolute inset-0 bg-black/40" />
         </div>
@@ -239,15 +159,11 @@ const Home = () => {
                 transition={{ delay: index * 0.2 }}
                 className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
               >
-                <div className="w-full h-48 overflow-hidden">
-                  <ProgressiveImage
-                    src={project.image}
-                    lowQualitySrc={project.thumbnail}
-                    alt={project.title}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
-                    index={index + heroImages.length}
-                  />
-                </div>
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  className="w-full h-48 object-cover"
+                />
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
                   <p className="text-gray-600">{project.description}</p>
