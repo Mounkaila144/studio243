@@ -9,6 +9,7 @@ import Services from './pages/Services';
 import Portfolio from './pages/Portfolio';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import ConstruireEtranger from './pages/ConstruireEtranger';
 
 function App() {
   return (
@@ -18,10 +19,15 @@ function App() {
         <AnimatePresence mode="wait">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/projets" element={<Portfolio />} />
+            <Route path="/construire-etranger" element={<ConstruireEtranger />} />
+            <Route path="/nos-services" element={<Services />} />
+            <Route path="/a-propos" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
+            {/* Routes anciennes pour compatibilité */}
             <Route path="/services" element={<Services />} />
             <Route path="/portfolio" element={<Portfolio />} />
             <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
           </Routes>
         </AnimatePresence>
         <WhatsAppButton />

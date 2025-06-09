@@ -48,7 +48,7 @@ const Portfolio = () => {
     : projects.filter(project => project.category === filter);
 
   return (
-    <div className="pt-16">
+    <div className="">
       {/* Hero Section */}
       <motion.section
         initial={{ opacity: 0 }}

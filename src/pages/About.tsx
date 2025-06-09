@@ -27,7 +27,7 @@ const About = () => {
   ];
 
   return (
-    <div className="pt-16">
+    <div className="">
       {/* Hero Section */}
       <motion.section
         initial={{ opacity: 0 }}
